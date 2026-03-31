@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="refresh" content="20">
+  <title>Quotique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:    #0b1d3a;
+      --blue:    #1d4ed8;
+      --sky:     #e8f0fe;
+      --white:   #ffffff;
+      --offwhite:#f7f9ff;
+      --text:    #0b1d3a;
+      --muted:   #5a7096;
+      --border:  #c8d8f0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--offwhite);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 32px;
+      height: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-brand em { font-style: italic; color: #93b4f0; }
+
+    .nav-right { display: flex; gap: 8px; align-items: center; }
+
+    .nb {
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 400;
+      border: none;
+      text-decoration: none;
+    }
+
+    .nb-all  { background: rgba(147,180,240,0.15); color: #d0e4ff; }
+    .nb-login { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .nb-signup { background: #1d4ed8; color: #fff; font-weight: 500; }
+
+    main { padding: 44px 32px 36px; max-width: 900px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-brand">Quot<em>ique</em></a>
+    <div class="nav-right">
+      <a href="/all" class="nb nb-all">All Quotes</a>
+      <a href="#" class="nb nb-login">Log In</a>
+      <a href="#" class="nb nb-signup">Sign Up</a>
+    </div>
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

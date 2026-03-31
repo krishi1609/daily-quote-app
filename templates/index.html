@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .kicker {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 400;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  h1 em { font-style: italic; color: var(--blue); }
+
+  .tagline {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* Badges */
+  .chips { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 13px;
+    border-radius: 100px;
+  }
+
+  .chip-live {
+    background: var(--navy);
+    color: #93b4f0;
+    border: 1px solid rgba(147,180,240,0.25);
+  }
+
+  .chip-auto {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  .pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: p 1.6s ease-in-out infinite;
+  }
+
+  @keyframes p {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  /* Quote Card */
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 660px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .card-top {
+    background: var(--navy);
+    padding: 24px 32px;
+  }
+
+.card-quote-mark {
+  display: none;   /* ← removes it completely */
+}  
+
+  .card-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: #e8f0fe;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .card-bottom {
+    padding: 20px 32px 24px;
+    background: var(--white);
+  }
+
+  .card-author-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-author { display: flex; align-items: center; gap: 10px; }
+  .author-dot  { width: 28px; height: 2px; background: var(--blue); border-radius: 2px; }
+
+  .author-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue);
+    letter-spacing: 0.04em;
+  }
+
+  .num-badge {
+    background: var(--navy);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* Like / Dislike */
+  .reactions { display: flex; gap: 10px; }
+
+  .rbtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    background: #ffffff;
+    color: #1d4ed8;
+    border: 2px solid #1d4ed8;
+    text-decoration: none;
+  }
+
+  /* Previous / Next */
+  .nav-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    max-width: 660px;
+  }
+
+  .btn-p {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: #ffffff;
+    color: #1d4ed8;
+    border: 2px solid #1d4ed8;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .btn-n {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: #1d4ed8;
+    color: #ffffff;
+    border: 2px solid #1d4ed8;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  .hint {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+</style>
+
+<p class="kicker">✦ Auto changes every 20 seconds</p>
+<h1>Words that <em>move</em> you.</h1>
+<p class="tagline">A fresh quote from the internet, delivered every 20 seconds.</p>
+
+<div class="chips">
+  <span class="chip chip-live">
+    <div class="pulse"></div>
+    Live from ZenQuotes API
+  </span>
+  <span class="chip chip-auto">
+    <div style="width:6px;height:6px;border-radius:50%;background:#16a34a;"></div>
+    Auto fetch every 20s
+  </span>
+</div>
+
+<div class="card">
+  <div class="card-top">
+    <div class="card-quote-mark">"</div>
+    <p class="card-text">{{ quote.text }}</p>
+  </div>
+  <div class="card-bottom">
+    <div class="card-author-row">
+      <div class="card-author">
+        <div class="author-dot"></div>
+        <span class="author-name">{{ quote.author }}</span>
+      </div>
+      <span class="num-badge">Quote #{{ quote.id }}</span>
+    </div>
+    <div class="reactions">
+      <a href="/like/{{ quote.id }}" class="rbtn">
+        👍 Like &nbsp;<strong>{{ quote.likes }}</strong>
+      </a>
+      <a href="/dislike/{{ quote.id }}" class="rbtn">
+        👎 Dislike &nbsp;<strong>{{ quote.dislikes }}</strong>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="nav-btns">
+  <a href="/prev/{{ quote.id }}" class="btn-p">&#8592; Previous</a>
+  <a href="/next/{{ quote.id }}" class="btn-n">Next &#8594;</a>
+</div>
+<p class="hint">Quote auto-refreshes every 20 seconds in the background</p>
+
+{% endblock %}

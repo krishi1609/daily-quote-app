@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .pg-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .cpill {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .tbl-wrap {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+  }
+
+  thead { background: var(--navy); }
+
+  th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #93b4f0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-weight: 500;
+  }
+
+  td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--navy);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: var(--white);
+  }
+
+  .td-q {
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .td-id { color: var(--muted); font-size: 12px; width: 46px; }
+  .td-a  { color: var(--blue); font-size: 12px; white-space: nowrap; width: 110px; font-weight: 500; }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--sky); }
+
+  .gl {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    color: #1d4ed8;
+    border: 2px solid #1d4ed8;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .gd {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    color: #1d4ed8;
+    border: 2px solid #1d4ed8;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+</style>
+
+<h1>All Quotes</h1>
+<p class="pg-sub">Every quote auto fetched from ZenQuotes API</p>
+<span class="cpill">{{ quotes|length }} quotes saved</span>
+
+<div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:46px;">No.</th>
+        <th>Quote</th>
+        <th style="width:110px;">Author</th>
+        <th style="width:76px;">Likes</th>
+        <th style="width:86px;">Dislikes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for q in quotes %}
+      <tr>
+        <td class="td-id">#{{ q.id }}</td>
+        <td class="td-q">"{{ q.text }}"</td>
+        <td class="td-a">{{ q.author }}</td>
+        <td><span class="gl">👍 {{ q.likes }}</span></td>
+        <td><span class="gd">👎 {{ q.dislikes }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
